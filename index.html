@@ -105,8 +105,8 @@ header.top {
 .feature {
   border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: var(--elev);
 }
-.feature a { display: grid; grid-template-columns: 118px minmax(0,1fr); min-height: 118px; height: 100%; }
-.feature .media { min-height: 100%; }
+.feature a { display: grid; grid-template-columns: 118px minmax(0,1fr); min-height: 118px; height: 100%; overflow: hidden; }
+.feature .media { min-height: 100%; max-width: 118px; }
 .feature h3 { font-size: .92rem; letter-spacing: -.025em; line-height: 1.25; font-weight: 620; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 .f-body { padding: .55rem .7rem .6rem; display: flex; flex-direction: column; gap: .28rem; }
 
@@ -114,13 +114,20 @@ header.top {
   font-family: var(--mono); font-size: .62rem; letter-spacing: .14em; text-transform: uppercase;
   color: var(--dim); padding: .55rem 0 .3rem; border-bottom: 1px solid var(--line); margin-bottom: .15rem;
 }
-.feed { display: grid; grid-template-columns: 1fr 1fr; column-gap: 1.1rem; }
+.feed { display: grid; grid-template-columns: 1fr 1fr; column-gap: 1.25rem; }
 .row {
   border-bottom: 1px solid var(--line);
+  overflow: hidden;
 }
 .row a {
-  display: grid; grid-template-columns: 88px minmax(0,1fr); gap: .65rem;
-  padding: .48rem 0; align-items: stretch;
+  display: grid; grid-template-columns: 80px minmax(0,1fr); gap: .6rem;
+  padding: .5rem 0; align-items: start;
+  overflow: hidden;
+}
+.row .media {
+  width: 80px; height: 60px; min-width: 80px; max-width: 80px;
+  aspect-ratio: 4/3; border-radius: 7px;
+  overflow: hidden; flex-shrink: 0;
 }
 .row h3 {
   font-size: .9rem; font-weight: 610; letter-spacing: -.02em; line-height: 1.28;
@@ -132,8 +139,7 @@ header.top {
   position: relative; background: #121722; overflow: hidden;
 }
 .hero .media { aspect-ratio: auto; height: 100%; }
-.row .media { aspect-ratio: 4/3; border-radius: 8px; }
-.feature .media { aspect-ratio: auto; }
+.feature .media { aspect-ratio: auto; width: 118px; min-width: 118px; max-width: 118px; overflow: hidden; }
 .media img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .ph {
   display: none; position: absolute; inset: 0; place-items: center;
@@ -181,11 +187,13 @@ footer.foot b { color: var(--muted); font-weight: 600; }
   .hero h2 { font-size: 1.14rem; }
   .side { grid-template-rows: none; }
   .feature a { grid-template-columns: 108px minmax(0,1fr); min-height: 96px; }
+  .feature .media { width: 108px; min-width: 108px; }
   .meta-right { text-align: left; margin-left: 0; width: 100%; }
 }
 @media (max-width: 560px) {
   .wrap { padding: 0 .75rem 2rem; }
-  .row a { grid-template-columns: 76px minmax(0,1fr); gap: .55rem; padding: .48rem 0; }
+  .row a { grid-template-columns: 72px minmax(0,1fr); gap: .55rem; padding: .48rem 0; }
+  .row .media { width: 72px; height: 54px; min-width: 72px; max-width: 72px; }
   .row h3 { font-size: .86rem; }
   .hero-body, .f-body { padding: .6rem .7rem .7rem; }
   .brand b { font-size: 1rem; }
@@ -201,7 +209,7 @@ footer.foot b { color: var(--muted); font-weight: 600; }
   <header class="top">
     <div class="kicker"><span class="live" aria-hidden="true"></span> Live digest · London</div>
     <div class="brand"><b>Chronoghost</b><span>News</span></div>
-    <div class="meta-right"><b>85 stories · 12 sources</b><br>Tuesday 29 September 2026 · 4:29pm BST</div>
+    <div class="meta-right"><b>85 stories · 12 sources</b><br>Tuesday 29 September 2026 · 4:51pm BST</div>
   </header>
   <div class="sub">
     <p class="lede">UK &amp; NI, world wires and frontier AI — mixed by time, newest first. One line on why it matters.</p>
@@ -258,7 +266,7 @@ footer.foot b { color: var(--muted); font-weight: 600; }
       <a href="https://techcrunch.com/2026/09/29/after-losing-his-voice-to-cancer-this-founder-is-building-glasses-for-voice/" target="_blank" rel="noopener">
         <div class="media"><img src="https://techcrunch.com/wp-content/uploads/2022/01/GettyImages-1362873121.jpg?resize=1200,800" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.parentElement.classList.add('is-fallback')"><div class="ph" aria-hidden="true"><span>TC</span></div></div>
         <div class="r-body">
-          <div class="meta"><span class="badge">TechCrunch</span><span class="topic">Biotech &amp; Health</span><span class="dot">·</span><time>29m ago</time></div>
+          <div class="meta"><span class="badge">TechCrunch</span><span class="topic">Biotech &amp; Health</span><span class="dot">·</span><time>51m ago</time></div>
           <h3>After losing his voice to cancer, this founder is building “glasses for voice”</h3>
           <p class="why">Assistive hardware for lost speech is the human end of the voice-model boom, not another chatbot wrap.</p>
         </div>
@@ -269,7 +277,7 @@ footer.foot b { color: var(--muted); font-weight: 600; }
       <a href="https://www.bbc.co.uk/news/articles/cwj3dknz5dmeo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener">
         <div class="media"><img src="https://ichef.bbci.co.uk/ace/standard/976/cpsprodpb/1753/live/e97aee60-bbf7-11f1-a430-4d16ee157c41.jpg" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.parentElement.classList.add('is-fallback')"><div class="ph" aria-hidden="true"><span>NI</span></div></div>
         <div class="r-body">
-          <div class="meta"><span class="badge">BBC NI</span><span class="topic">Housing</span><span class="dot">·</span><time>47m ago</time></div>
+          <div class="meta"><span class="badge">BBC NI</span><span class="topic">Housing</span><span class="dot">·</span><time>1h ago</time></div>
           <h3>Council blocked from relaxing rural housing rules</h3>
           <p class="why">Planning vs rural housing need — a quiet NI policy fight that still shapes who can live where.</p>
         </div>
@@ -280,7 +288,7 @@ footer.foot b { color: var(--muted); font-weight: 600; }
       <a href="https://www.bbc.co.uk/news/articles/cmdx01gjxlypo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener">
         <div class="media"><img src="https://ichef.bbci.co.uk/ace/standard/976/cpsprodpb/9993/live/1fea4e50-b74d-11f1-a430-4d16ee157c41.jpg" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.parentElement.classList.add('is-fallback')"><div class="ph" aria-hidden="true"><span>NI</span></div></div>
         <div class="r-body">
-          <div class="meta"><span class="badge">BBC NI</span><span class="topic">Crime · Justice</span><span class="dot">·</span><time>50m ago</time></div>
+          <div class="meta"><span class="badge">BBC NI</span><span class="topic">Crime · Justice</span><span class="dot">·</span><time>1h ago</time></div>
           <h3>CCTV footage of suspected Omagh bombers&#x27; car missing, inquiry hears</h3>
           <p class="why">The Omagh inquiry still surfaces missing evidence years on — relevant if you follow NI legacy justice.</p>
         </div>
@@ -335,7 +343,7 @@ footer.foot b { color: var(--muted); font-weight: 600; }
       <a href="https://www.theverge.com/tech/1001867/mozilla-firefox-157-redesign-compact-mode" target="_blank" rel="noopener">
         <div class="media"><img src="https://platform.theverge.com/wp-content/uploads/sites/2/2026/09/firefox-project-nova-redesign-promo.webp?quality=90&amp;strip=all&amp;crop=0,0,100,100" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.parentElement.classList.add('is-fallback')"><div class="ph" aria-hidden="true"><span>VG</span></div></div>
         <div class="r-body">
-          <div class="meta"><span class="badge">The Verge</span><span class="topic">Tech</span><span class="dot">·</span><time>1h ago</time></div>
+          <div class="meta"><span class="badge">The Verge</span><span class="topic">Tech</span><span class="dot">·</span><time>2h ago</time></div>
           <h3>Firefox just got a redesign with round tabs, new themes, and Compact Mode</h3>
           <p class="why">Mozilla trying to win users back from Chrome with a redesign — the browser war, still, with an AI-sceptic twist.</p>
         </div>
@@ -379,7 +387,7 @@ footer.foot b { color: var(--muted); font-weight: 600; }
       <a href="https://news.google.com/rss/articles/CBMiwgFBVV95cUxNazVCbjhpLXhaZU5LbGk2TENxV0NHbXdFSS03bVpudXJnOE84Y2ItOGxEdHRHRHYwNG80SlRsZEVLNDN4eDJNaDJJRmlxbWpyNDU4Uk9scjNCQXVzelhERzZzZUZOS1c0M3JEMFpMWjFuRGU2cHhqQk1ZSDlIMFRwZmtCYXJZajFpcEM4cFRIUF9tUWljSVRzRFN4akQyLWdaNVltTDY3anJJUkRHbWctVkNRbzNQV3FBejF4UldtcXA2QQ?oc=5" target="_blank" rel="noopener">
         <div class="media no-img"><div class="ph" aria-hidden="true"><span>REU</span></div></div>
         <div class="r-body">
-          <div class="meta"><span class="badge">Reuters</span><span class="topic">AI</span><span class="dot">·</span><time>2h ago</time></div>
+          <div class="meta"><span class="badge">Reuters</span><span class="topic">AI</span><span class="dot">·</span><time>3h ago</time></div>
           <h3>Anthropic&#x27;s $518 billion AI buildout hinges largely on deals that cannot be canceled, filing shows</h3>
           <p class="why">Wire copy, filed fast — use it for the facts when the analysis pieces start spinning.</p>
         </div>
@@ -390,7 +398,7 @@ footer.foot b { color: var(--muted); font-weight: 600; }
       <a href="https://www.ft.com/content/a8c1d14d-97aa-4b09-8162-adbcac1d0029?syn-25a6b1a6=1" target="_blank" rel="noopener">
         <div class="media no-img"><div class="ph" aria-hidden="true"><span>FT</span></div></div>
         <div class="r-body">
-          <div class="meta"><span class="badge">Financial Times</span><span class="topic">Safety</span><span class="dot">·</span><time>2h ago</time></div>
+          <div class="meta"><span class="badge">Financial Times</span><span class="topic">Safety</span><span class="dot">·</span><time>3h ago</time></div>
           <h3>Trump to meet AI chiefs over safety outcry</h3>
           <p class="why">Washington hauling in lab chiefs over a safety outcry — politics catching up with this week’s model delays and IPO risk language.</p>
         </div>
@@ -401,7 +409,7 @@ footer.foot b { color: var(--muted); font-weight: 600; }
       <a href="https://techcrunch.com/2026/09/29/reco-raises-55m-as-ai-agent-security-startups-crowd-the-market/" target="_blank" rel="noopener">
         <div class="media"><img src="https://techcrunch.com/wp-content/uploads/2023/08/getty-keys-red-background-locks.jpg?resize=1200,800" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.parentElement.classList.add('is-fallback')"><div class="ph" aria-hidden="true"><span>TC</span></div></div>
         <div class="r-body">
-          <div class="meta"><span class="badge">TechCrunch</span><span class="topic">Security</span><span class="dot">·</span><time>2h ago</time></div>
+          <div class="meta"><span class="badge">TechCrunch</span><span class="topic">Security</span><span class="dot">·</span><time>3h ago</time></div>
           <h3>Reco raises $55M as AI agent security startups crowd the market</h3>
           <p class="why">A tech-desk take on a story that will leak into the UK and lab briefs by tomorrow.</p>
         </div>
@@ -456,7 +464,7 @@ footer.foot b { color: var(--muted); font-weight: 600; }
       <a href="https://www.bbc.co.uk/news/articles/cm7502650gy6o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener">
         <div class="media"><img src="https://ichef.bbci.co.uk/ace/standard/976/cpsprodpb/84f5/live/9e043b70-bc02-11f1-bc1f-3f186ca4140c.jpg" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.parentElement.classList.add('is-fallback')"><div class="ph" aria-hidden="true"><span>BBC</span></div></div>
         <div class="r-body">
-          <div class="meta"><span class="badge">BBC UK</span><span class="topic">UK · Security</span><span class="dot">·</span><time>3h ago</time></div>
+          <div class="meta"><span class="badge">BBC UK</span><span class="topic">UK · Security</span><span class="dot">·</span><time>4h ago</time></div>
           <h3>RAF Fairford incident involves &#x27;foreign actor&#x27;, says Rubio</h3>
           <p class="why">Washington naming a ‘foreign actor’ over Fairford raises the stakes beyond a local arrest story — watch for diplomatic fallout.</p>
         </div>
@@ -500,7 +508,7 @@ footer.foot b { color: var(--muted); font-weight: 600; }
       <a href="https://www.bbc.co.uk/news/articles/cx1l60v6p92ro?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener">
         <div class="media"><img src="https://ichef.bbci.co.uk/ace/standard/976/cpsprodpb/363b/live/abdd57e0-bbe9-11f1-9fdf-af86d88579d6.png" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.parentElement.classList.add('is-fallback')"><div class="ph" aria-hidden="true"><span>BBC</span></div></div>
         <div class="r-body">
-          <div class="meta"><span class="badge">BBC UK</span><span class="topic">Crime · Justice</span><span class="dot">·</span><time>4h ago</time></div>
+          <div class="meta"><span class="badge">BBC UK</span><span class="topic">Crime · Justice</span><span class="dot">·</span><time>5h ago</time></div>
           <h3>Met Police officer charged after BBC Charing Cross investigation</h3>
           <p class="why">Fallout from the BBC’s Charing Cross investigation reaching charging decisions — accountability, slowly.</p>
         </div>
@@ -566,7 +574,7 @@ footer.foot b { color: var(--muted); font-weight: 600; }
       <a href="https://www.bbc.co.uk/news/articles/cq6m03ld7nvo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener">
         <div class="media"><img src="https://ichef.bbci.co.uk/ace/standard/976/cpsprodpb/7c09/live/7224a110-bbf9-11f1-bc1f-3f186ca4140c.jpg" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.parentElement.classList.add('is-fallback')"><div class="ph" aria-hidden="true"><span>BBC</span></div></div>
         <div class="r-body">
-          <div class="meta"><span class="badge">BBC UK</span><span class="topic">Politics</span><span class="dot">·</span><time>5h ago</time></div>
+          <div class="meta"><span class="badge">BBC UK</span><span class="topic">Politics</span><span class="dot">·</span><time>6h ago</time></div>
           <h3>What is the triple lock and why are people talking about it?</h3>
           <p class="why">Pensions vs care is the trade-off UK governments duck; this is how Burnham plans to sell ending the earnings link.</p>
         </div>
@@ -711,7 +719,7 @@ footer.foot b { color: var(--muted); font-weight: 600; }
       <a href="https://arstechnica.com/tech-policy/2026/09/nvidia-may-sell-more-chips-in-china-as-jensen-huangs-influence-over-trump-grows/" target="_blank" rel="noopener">
         <div class="media"><img src="https://cdn.arstechnica.net/wp-content/uploads/2026/09/GettyImages-2296993009-1024x648.jpg" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.parentElement.classList.add('is-fallback')"><div class="ph" aria-hidden="true"><span>ARS</span></div></div>
         <div class="r-body">
-          <div class="meta"><span class="badge">Ars Technica</span><span class="topic">AI</span><span class="dot">·</span><time>17h ago</time></div>
+          <div class="meta"><span class="badge">Ars Technica</span><span class="topic">AI</span><span class="dot">·</span><time>18h ago</time></div>
           <h3>Experts worry about Nvidia&#x27;s AI chip sales in China and influence over Trump</h3>
           <p class="why">Insurers on the hook for AI build-out is how Wall Street prices a capex boom that might not earn its keep.</p>
         </div>
@@ -722,7 +730,7 @@ footer.foot b { color: var(--muted); font-weight: 600; }
       <a href="https://www.bbc.co.uk/news/articles/cmqlwn60yyq9o?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener">
         <div class="media"><img src="https://ichef.bbci.co.uk/ace/standard/976/cpsprodpb/f5ad/live/9ef90bb0-bb52-11f1-a071-65d2e11c8f4a.jpg" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.parentElement.classList.add('is-fallback')"><div class="ph" aria-hidden="true"><span>NI</span></div></div>
         <div class="r-body">
-          <div class="meta"><span class="badge">BBC NI</span><span class="topic">Northern Ireland</span><span class="dot">·</span><time>17h ago</time></div>
+          <div class="meta"><span class="badge">BBC NI</span><span class="topic">Northern Ireland</span><span class="dot">·</span><time>18h ago</time></div>
           <h3>Orange Order parade dispute continues after main players hold talks</h3>
           <p class="why">Power-sharing, the PSNI’s credibility and the Parades Commission are all under stress — this is the piece that maps who said what when the temperature spiked.</p>
         </div>
@@ -755,7 +763,7 @@ footer.foot b { color: var(--muted); font-weight: 600; }
       <a href="https://arstechnica.com/ai/2026/09/florida-asks-court-to-put-the-brakes-on-openais-frontier-ai-development/" target="_blank" rel="noopener">
         <div class="media"><img src="https://cdn.arstechnica.net/wp-content/uploads/2026/09/GettyImages-2213954141-1152x648.jpg" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.parentElement.classList.add('is-fallback')"><div class="ph" aria-hidden="true"><span>ARS</span></div></div>
         <div class="r-body">
-          <div class="meta"><span class="badge">Ars Technica</span><span class="topic">AI</span><span class="dot">·</span><time>18h ago</time></div>
+          <div class="meta"><span class="badge">Ars Technica</span><span class="topic">AI</span><span class="dot">·</span><time>19h ago</time></div>
           <h3>Florida invokes extinction fears in legal bid to halt OpenAI development</h3>
           <p class="why">A tech-desk take on a story that will leak into the UK and lab briefs by tomorrow.</p>
         </div>
@@ -766,7 +774,7 @@ footer.foot b { color: var(--muted); font-weight: 600; }
       <a href="https://arstechnica.com/science/2026/09/new-device-captures-carbon-dioxide-by-pumping-it-across-a-battery/" target="_blank" rel="noopener">
         <div class="media"><img src="https://cdn.arstechnica.net/wp-content/uploads/2026/09/GettyImages-1695996169-1152x648.jpg" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.parentElement.classList.add('is-fallback')"><div class="ph" aria-hidden="true"><span>ARS</span></div></div>
         <div class="r-body">
-          <div class="meta"><span class="badge">Ars Technica</span><span class="topic">Science</span><span class="dot">·</span><time>18h ago</time></div>
+          <div class="meta"><span class="badge">Ars Technica</span><span class="topic">Science</span><span class="dot">·</span><time>19h ago</time></div>
           <h3>New device captures carbon dioxide by pumping it across a battery</h3>
           <p class="why">A tech-desk take on a story that will leak into the UK and lab briefs by tomorrow.</p>
         </div>
@@ -821,7 +829,7 @@ footer.foot b { color: var(--muted); font-weight: 600; }
       <a href="https://www.bbc.co.uk/news/articles/cq0m3e2rxn8zo?at_medium=RSS&amp;at_campaign=rss" target="_blank" rel="noopener">
         <div class="media"><img src="https://ichef.bbci.co.uk/ace/standard/976/cpsprodpb/6e89/live/abfa3790-b5bb-11f1-8d1d-a985658d9d3a.jpg" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.parentElement.classList.add('is-fallback')"><div class="ph" aria-hidden="true"><span>NI</span></div></div>
         <div class="r-body">
-          <div class="meta"><span class="badge">BBC NI</span><span class="topic">Crime · Justice</span><span class="dot">·</span><time>23h ago</time></div>
+          <div class="meta"><span class="badge">BBC NI</span><span class="topic">Crime · Justice</span><span class="dot">·</span><time>Yesterday</time></div>
           <h3>Omagh bombing inquiry hears evidence of movements of car that carried bomb</h3>
           <p class="why">More Omagh inquiry detail on the bomb car’s movements — legacy justice, still unfolding.</p>
         </div>
@@ -1188,7 +1196,7 @@ footer.foot b { color: var(--muted); font-weight: 600; }
 </div></section>
 
   <footer class="foot">
-    <b>Chronoghost News</b> · Tuesday 29 September 2026 · updated 4:29pm Europe/London<br>
+    <b>Chronoghost News</b> · Tuesday 29 September 2026 · updated 4:51pm Europe/London<br>
     Sources: TechCrunch 5 · BBC NI 13 · BBC UK 12 · Ars Technica 7 · The Verge 5 · Reuters 5 · Financial Times 5 · BBC Tech 6 · OpenAI 8 · Anthropic 8 · xAI 6 · Google DeepMind 5 · mixed timeline · max 100
   </footer>
 </div>
