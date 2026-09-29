@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Phil's Briefing — Tuesday 29 September 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0b0d12;
+    --bg-elevated: #12151c;
+    --bg-card: #161a24;
+    --bg-card-hover: #1c2130;
+    --border: rgba(255,255,255,0.07);
+    --border-strong: rgba(255,255,255,0.12);
+    --text: #e8eaf0;
+    --text-muted: #8b92a5;
+    --text-dim: #5c6478;
+    --accent: #7c9cff;
+    --bbc: #e05c5c;
+    --bbc-ni: #5ec4a8;
+    --openai: #74c0a0;
+    --xai: #a78bfa;
+    --anthropic: #d4a574;
+    --radius: 14px;
+    --shadow: 0 8px 32px rgba(0,0,0,0.35);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: "DM Sans", system-ui, -apple-system, Segoe UI, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.55;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 50% at 20% -10%, rgba(124,156,255,0.12), transparent 50%),
+      radial-gradient(ellipse 60% 40% at 90% 10%, rgba(167,139,250,0.08), transparent 45%),
+      radial-gradient(ellipse 50% 30% at 50% 100%, rgba(94,196,168,0.06), transparent 40%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .wrap {
+    position: relative;
+    z-index: 1;
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 2.5rem 1.25rem 4rem;
+  }
+
+  /* Header */
+  header.hero {
+    margin-bottom: 2.75rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.85rem;
+  }
+
+  .eyebrow::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 12px var(--accent);
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.45; }
+  }
+
+  h1 {
+    font-family: "Instrument Serif", Georgia, serif;
+    font-size: clamp(2.4rem, 6vw, 3.6rem);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-bottom: 0.6rem;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .date-line {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+
+  .intro {
+    margin-top: 1.1rem;
+    max-width: 38rem;
+    color: var(--text-muted);
+    font-size: 0.975rem;
+  }
+
+  /* Nav chips */
+  nav.toc {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 1.75rem 0 0;
+  }
+
+  nav.toc a {
+    text-decoration: none;
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 0.4rem 0.85rem;
+    border-radius: 999px;
+    border: 1px solid var(--border-strong);
+    color: var(--text-muted);
+    background: rgba(255,255,255,0.02);
+    transition: color 0.15s, border-color 0.15s, background 0.15s;
+  }
+
+  nav.toc a:hover { color: var(--text); background: rgba(255,255,255,0.05); }
+  nav.toc a[data-s="bbc"]:hover { border-color: var(--bbc); color: var(--bbc); }
+  nav.toc a[data-s="ni"]:hover { border-color: var(--bbc-ni); color: var(--bbc-ni); }
+  nav.toc a[data-s="openai"]:hover { border-color: var(--openai); color: var(--openai); }
+  nav.toc a[data-s="xai"]:hover { border-color: var(--xai); color: var(--xai); }
+  nav.toc a[data-s="anthropic"]:hover { border-color: var(--anthropic); color: var(--anthropic); }
+
+  /* Sections */
+  section.source {
+    margin-bottom: 2.75rem;
+  }
+
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.15rem;
+    flex-wrap: wrap;
+  }
+
+  .section-head h2 {
+    font-family: "Instrument Serif", Georgia, serif;
+    font-size: 1.65rem;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+  }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .dot.bbc { background: var(--bbc); box-shadow: 0 0 14px rgba(224,92,92,0.45); }
+  .dot.ni { background: var(--bbc-ni); box-shadow: 0 0 14px rgba(94,196,168,0.45); }
+  .dot.openai { background: var(--openai); box-shadow: 0 0 14px rgba(116,192,160,0.45); }
+  .dot.xai { background: var(--xai); box-shadow: 0 0 14px rgba(167,139,250,0.45); }
+  .dot.anthropic { background: var(--anthropic); box-shadow: 0 0 14px rgba(212,165,116,0.45); }
+
+  .count {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-dim);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  /* Cards */
+  .cards {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  article.card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.15rem 1.25rem 1.2rem;
+    transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  article.card::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--card-accent, var(--accent));
+    opacity: 0.85;
+  }
+
+  article.card:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--border-strong);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+  }
+
+  .card-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    margin-bottom: 0.45rem;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  .card-meta .when { color: var(--text-muted); font-weight: 500; letter-spacing: 0.02em; text-transform: none; font-size: 0.78rem; }
+
+  article.card h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    line-height: 1.35;
+    margin-bottom: 0.55rem;
+    letter-spacing: -0.01em;
+  }
+
+  article.card h3 a {
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  article.card h3 a:hover {
+    color: var(--card-accent, var(--accent));
+  }
+
+  article.card h3 a::after {
+    content: " ↗";
+    font-size: 0.85em;
+    opacity: 0.45;
+  }
+
+  .snippet {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    margin-bottom: 0.7rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .why {
+    font-size: 0.9rem;
+    color: var(--text);
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.7rem 0.85rem;
+    line-height: 1.45;
+  }
+
+  .why strong {
+    color: var(--card-accent, var(--accent));
+    font-weight: 600;
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+
+  /* Accent per section */
+  #bbc .card { --card-accent: var(--bbc); }
+  #ni .card { --card-accent: var(--bbc-ni); }
+  #openai .card { --card-accent: var(--openai); }
+  #xai .card { --card-accent: var(--xai); }
+  #anthropic .card { --card-accent: var(--anthropic); }
+
+  footer {
+    margin-top: 1rem;
+    padding-top: 1.75rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    text-align: center;
+  }
+
+  footer span { color: var(--text-muted); }
+
+  @media (max-width: 560px) {
+    .wrap { padding: 1.75rem 1rem 3rem; }
+    article.card { padding: 1rem 1.05rem 1.05rem; }
+    h1 { font-size: 2.15rem; }
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="hero">
+      <div class="eyebrow">Daily digest · Europe/London</div>
+      <h1>Phil's <em>Briefing</em></h1>
+      <p class="date-line">Tuesday 29 September 2026</p>
+      <p class="intro">A sharp cut of UK &amp; NI headlines plus the latest from OpenAI, xAI and Anthropic — each with a one-liner on why it matters to you.</p>
+      <nav class="toc" aria-label="Jump to source">
+        <a href="#bbc" data-s="bbc">BBC UK</a>
+        <a href="#ni" data-s="ni">BBC NI</a>
+        <a href="#openai" data-s="openai">OpenAI</a>
+        <a href="#xai" data-s="xai">xAI</a>
+        <a href="#anthropic" data-s="anthropic">Anthropic</a>
+      </nav>
+    </header>
+
+    <!-- BBC UK -->
+    <section class="source" id="bbc">
+      <div class="section-head">
+        <h2><span class="dot bbc" aria-hidden="true"></span> BBC News UK</h2>
+        <span class="count">5 stories</span>
+      </div>
+      <div class="cards">
+        <article class="card">
+          <div class="card-meta"><span>Politics</span> · <span class="when">29 Sep 2026</span></div>
+          <h3><a href="https://www.bbc.co.uk/news/articles/crwyzd3gv519o" target="_blank" rel="noopener">Burnham proposes NHS-style social care system for England</a></h3>
+          <p class="snippet">Prime Minister Andy Burnham wants free social care for everyone in England and will put the plan to voters at the next general election — with the pensions triple lock in the firing line to help pay for it.</p>
+          <p class="why"><strong>For you</strong> This is the biggest domestic policy bet of Burnham’s premiership — if care funding shifts, it reshapes taxes, pensions and the NHS capacity story you’ll keep hearing through the next election cycle.</p>
+        </article>
+
+        <article class="card">
+          <div class="card-meta"><span>UK · Security</span> · <span class="when">29 Sep 2026</span></div>
+          <h3><a href="https://www.bbc.co.uk/news/articles/c6e9elmpvglno" target="_blank" rel="noopener">Five men arrested in RAF Fairford incident released on police bail</a></h3>
+          <p class="snippet">Counter-terror police have released on bail five British nationals arrested near RAF Fairford after a suspected bomb plot; US Secretary of State Marco Rubio insists a foreign actor was “clearly” involved.</p>
+          <p class="why"><strong>For you</strong> A US bomber base on UK soil, five Londoners on bail, and Washington already blaming a foreign state — this is the kind of security story that can escalate fast and dominate the week’s briefings.</p>
+        </article>
+
+        <article class="card">
+          <div class="card-meta"><span>World · UK</span> · <span class="when">29 Sep 2026</span></div>
+          <h3><a href="https://www.bbc.co.uk/news/articles/cq5yj1835y1wo" target="_blank" rel="noopener">Argentina threatens legal action against UK over Falkland Islands oil exploration</a></h3>
+          <p class="snippet">Argentina’s president has threatened a legal challenge unless Britain halts oil exploration off the Falklands, setting a short deadline over the Sea Lion project.</p>
+          <p class="why"><strong>For you</strong> Sovereignty, energy and South Atlantic politics in one package — worth watching if you’re tracking how Burnham’s government handles hard power and resource disputes.</p>
+        </article>
+
+        <article class="card">
+          <div class="card-meta"><span>Housing · Politics</span> · <span class="when">29 Sep 2026</span></div>
+          <h3><a href="https://www.bbc.co.uk/news/articles/cjr4vgnq71kpo" target="_blank" rel="noopener">Rayner announces crackdown on ‘cowboy’ leasehold property agents</a></h3>
+          <p class="snippet">Housing Secretary Angela Rayner is bringing in an independent watchdog for managing agents and fee caps, as part of the wider push from leasehold toward commonhold.</p>
+          <p class="why"><strong>For you</strong> If you own or might buy a flat in England, this is the rare housing story that could actually hit your service charges and who polices them.</p>
+        </article>
+
+        <article class="card">
+          <div class="card-meta"><span>Analysis</span> · <span class="when">29 Sep 2026</span></div>
+          <h3><a href="https://www.bbc.co.uk/news/articles/c6jdvmy1287yo" target="_blank" rel="noopener">Why the PM could finally drop the triple lock pension pledge</a></h3>
+          <p class="snippet">Burnham is floating ending the earnings link in the triple lock from 2030 to help fund a national care service — keeping rises tied to prices or 2.5%.</p>
+          <p class="why"><strong>For you</strong> Pensions vs social care is the fiscal trade-off every UK government ducks; this explainer shows how Burnham plans to sell it — useful context for NI too, where welfare headlines travel fast.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- BBC NI -->
+    <section class="source" id="ni">
+      <div class="section-head">
+        <h2><span class="dot ni" aria-hidden="true"></span> BBC News Northern Ireland</h2>
+        <span class="count">4 stories</span>
+      </div>
+      <div class="cards">
+        <article class="card">
+          <div class="card-meta"><span>Northern Ireland</span> · <span class="when">29 Sep 2026</span></div>
+          <h3><a href="https://www.bbc.co.uk/news/articles/ck0j30yg8j9do" target="_blank" rel="noopener">Drumcree stalemate continues as protesters remain on Garvaghy Road</a></h3>
+          <p class="snippet">Day three of the Portadown stand-off: protesters still on the Garvaghy Road, Orangemen at Drumcree church, and a second round of Hillsborough talks lined up with the NI Secretary.</p>
+          <p class="why"><strong>For you</strong> This is the biggest NI story in years — parading, policing and Stormont’s stability all in play on your doorstep; keep this tab open until Bryant’s talks land or collapse.</p>
+        </article>
+
+        <article class="card">
+          <div class="card-meta"><span>NI Politics</span> · <span class="when">28 Sep 2026</span></div>
+          <h3><a href="https://www.bbc.co.uk/news/articles/cmqlwn60yyq9o" target="_blank" rel="noopener">Orange Order parade dispute continues after main players hold talks</a></h3>
+          <p class="snippet">Police blocked repeated attempts to walk the permitted Garvaghy Road route; O’Neill’s protest attendance has unionists accusing her of law-breaking and Stormont looking brittle.</p>
+          <p class="why"><strong>For you</strong> Power-sharing, the PSNI’s credibility and the Parades Commission are all under stress — this is the piece that maps who said what when the temperature spiked.</p>
+        </article>
+
+        <article class="card">
+          <div class="card-meta"><span>NI · Analysis</span> · <span class="when">28 Sep 2026</span></div>
+          <h3><a href="https://www.bbc.co.uk/news/articles/cmr4vy61gye3o" target="_blank" rel="noopener">Drumcree: New policing project, Stormont and community relations all on the line</a></h3>
+          <p class="snippet">BBC analysis of how the Garvaghy Road crisis collides with policing reform, community relations and the survival of the Executive.</p>
+          <p class="why"><strong>For you</strong> Skip the noise and read this for the stakes: investment, institutions and lived community relations in NI all hang on how this week resolves.</p>
+        </article>
+
+        <article class="card">
+          <div class="card-meta"><span>Ireland · Sport</span> · <span class="when">29 Sep 2026</span></div>
+          <h3><a href="https://www.bbc.co.uk/news/articles/cm9w495vlndzo" target="_blank" rel="noopener">Mark Zuckerberg to donate €150,000 to GAA clubs</a></h3>
+          <p class="snippet">Zuckerberg and Priscilla Chan are giving €50k each to three Waterford GAA clubs after buying Strancally Castle — a rare tech-meets-GAA crossover.</p>
+          <p class="why"><strong>For you</strong> Big Tech money landing in Irish community sport is an odd, readable subplot — and a reminder how close Silicon Valley capital now sits to the island’s local culture.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- OpenAI -->
+    <section class="source" id="openai">
+      <div class="section-head">
+        <h2><span class="dot openai" aria-hidden="true"></span> OpenAI</h2>
+        <span class="count">4 stories</span>
+      </div>
+      <div class="cards">
+        <article class="card">
+          <div class="card-meta"><span>Product</span> · <span class="when">16 Sep 2026</span></div>
+          <h3><a href="https://openai.com/index/reimagining-advertising-with-ai/" target="_blank" rel="noopener">Reimagining advertising with AI</a></h3>
+          <p class="snippet">OpenAI is rolling out AI-powered ChatGPT Ads: Sponsored Agents, prompt-built creatives, plus HubSpot and Shopify integrations for businesses already in those stacks.</p>
+          <p class="why"><strong>For you</strong> ChatGPT is becoming an ad channel — if you care how AI products monetise (and how that changes the free tier you use), this is the strategic shift to clock.</p>
+        </article>
+
+        <article class="card">
+          <div class="card-meta"><span>API</span> · <span class="when">10 Sep 2026</span></div>
+          <h3><a href="https://openai.com/index/introducing-the-agents-api/" target="_blank" rel="noopener">Introducing the Agents API</a></h3>
+          <p class="snippet">Public beta of a managed Agents API that brings the Codex harness to developers — OpenAI-hosted sandboxes or your own infra, pay only for tokens and tools.</p>
+          <p class="why"><strong>For you</strong> This is OpenAI productising the agent loop you’re already living in with Grok Bot — useful competitive intel on how the other lab ships “computer-using” agents.</p>
+        </article>
+
+        <article class="card">
+          <div class="card-meta"><span>API · Voice</span> · <span class="when">10 Sep 2026</span></div>
+          <h3><a href="https://openai.com/index/introducing-gpt-live-1-in-the-api/" target="_blank" rel="noopener">Build more natural voice experiences with GPT‑Live‑1 in the API</a></h3>
+          <p class="snippet">Full-duplex voice model for the API: listen and speak at once, smoother interruptions (~80% fewer in Speak’s evals), priced around $0.05/minute for the voice layer.</p>
+          <p class="why"><strong>For you</strong> Voice agents are the next UX frontier — worth comparing against Grok’s voice stack if you’re curious which lab nails natural conversation first.</p>
+        </article>
+
+        <article class="card">
+          <div class="card-meta"><span>Safety · Models</span> · <span class="when">3 Sep 2026</span></div>
+          <h3><a href="https://openai.com/index/safety-overview-gpt-6-astra/" target="_blank" rel="noopener">Safety overview: GPT‑6 Astra</a></h3>
+          <p class="snippet">OpenAI’s most capable broadly deployed model, and its first to hit the Critical cybersecurity level under the Preparedness Framework — with matching refusal behaviour on advanced offensive tasks.</p>
+          <p class="why"><strong>For you</strong> Astra set the September frontier bar; the “Critical cyber” label is why every other lab’s safety write-ups this month keep name-checking it.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- xAI -->
+    <section class="source" id="xai">
+      <div class="section-head">
+        <h2><span class="dot xai" aria-hidden="true"></span> xAI</h2>
+        <span class="count">4 stories</span>
+      </div>
+      <div class="cards">
+        <article class="card">
+          <div class="card-meta"><span>Product</span> · <span class="when">28 Sep 2026</span></div>
+          <h3><a href="https://x.ai/news/team-bots" target="_blank" rel="noopener">Team Bots: AI coworkers that learn from your team</a></h3>
+          <p class="snippet">Persistent AI coworkers that share a cloud computer, coordinate projects, plug into tools like Notion and Salesforce, and learn workflows from your team.</p>
+          <p class="why"><strong>For you</strong> You’re already running Grok Bot — Team Bots is the multiplayer upgrade: shared context, shared computer, less “start from zero” every session.</p>
+        </article>
+
+        <article class="card">
+          <div class="card-meta"><span>Models</span> · <span class="when">21 Sep 2026</span></div>
+          <h3><a href="https://x.ai/news/grok-4-7" target="_blank" rel="noopener">Introducing Grok 4.7</a></h3>
+          <p class="snippet">xAI’s strongest coding and knowledge-work model yet: longer RL on multi-hour tasks, better self-checks, native Grok Bot harness training — same $2/$6 pricing as 4.6, live in Cursor and the API.</p>
+          <p class="why"><strong>For you</strong> This is the model under the hood of your briefing bot — sharper at long coding/agent runs, and the price/performance story to cite when comparing labs.</p>
+        </article>
+
+        <article class="card">
+          <div class="card-meta"><span>Voice</span> · <span class="when">18 Sep 2026</span></div>
+          <h3><a href="https://x.ai/news/grok-voice-transcribe-2" target="_blank" rel="noopener">Introducing Grok Voice Transcribe 2.0</a></h3>
+          <p class="snippet">Higher-accuracy speech-to-text with speaker diarization, filler-word cleanup and key-term biasing — aimed at meetings, support calls and voice-agent pipelines.</p>
+          <p class="why"><strong>For you</strong> If you ever want meeting notes piped straight into Cursor or a Bot workflow, Transcribe 2.0 is the missing audio → text link in the xAI stack.</p>
+        </article>
+
+        <article class="card">
+          <div class="card-meta"><span>Cloud</span> · <span class="when">28 Sep 2026</span></div>
+          <h3><a href="https://aws.amazon.com/blogs/machine-learning/grok-4-7-is-now-available-on-amazon-bedrock/" target="_blank" rel="noopener">Grok 4.7 is now available on Amazon Bedrock</a></h3>
+          <p class="snippet">AWS brings Grok 4.7 to Bedrock with a 500K context window and four reasoning levels (low → xhigh), on bedrock-runtime with Responses, Chat Completions and Converse APIs.</p>
+          <p class="why"><strong>For you</strong> Distribution matters: Bedrock availability means Grok 4.7 is one IAM role away for any AWS shop you might advise or build with.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Anthropic -->
+    <section class="source" id="anthropic">
+      <div class="section-head">
+        <h2><span class="dot anthropic" aria-hidden="true"></span> Anthropic</h2>
+        <span class="count">4 stories</span>
+      </div>
+      <div class="cards">
+        <article class="card">
+          <div class="card-meta"><span>Models</span> · <span class="when">28 Sep 2026</span></div>
+          <h3><a href="https://www.anthropic.com/claude-sonnet-5-5" target="_blank" rel="noopener">Introducing Claude Sonnet 5.5</a></h3>
+          <p class="snippet">Second model in the Claude 5.5 family: ~30%+ faster than Sonnet 5, up to 30% cheaper per task, big jumps on agentic coding (70.6% Terminal-Bench 4.0) and near-Opus on knowledge work.</p>
+          <p class="why"><strong>For you</strong> Sonnet is the “daily driver” tier — if you ever A/B Claude vs Grok for routine coding/docs, 5.5 just reset that comparison overnight.</p>
+        </article>
+
+        <article class="card">
+          <div class="card-meta"><span>Models</span> · <span class="when">22 Sep 2026</span></div>
+          <h3><a href="https://www.anthropic.com/news/claude-opus-5-5" target="_blank" rel="noopener">Introducing Claude Opus 5.5</a></h3>
+          <p class="snippet">First of the 5.5 family: Fable-class performance on most work, ~40% cheaper than Opus 5, stronger alignment audit scores, and cyber/biology safeguards with verification programmes.</p>
+          <p class="why"><strong>For you</strong> Opus 5.5 is Anthropic’s answer to Astra — the model to watch when you care about long agentic coding runs and how hard labs are locking down dual-use capability.</p>
+        </article>
+
+        <article class="card">
+          <div class="card-meta"><span>Safety</span> · <span class="when">10 Sep 2026</span></div>
+          <h3><a href="https://www.anthropic.com/threat-intelligence-report-september-2026" target="_blank" rel="noopener">Detecting and countering misuse of AI: September 2026</a></h3>
+          <p class="snippet">Anthropic’s Threat Intelligence team details eight months of disrupted malicious Claude use — case studies showing how abuse patterns have evolved since 2025 reports.</p>
+          <p class="why"><strong>For you</strong> Practical threat intel from a frontier lab: useful if you want a clear-eyed view of how real actors try to weaponise assistants, not just the marketing safety slides.</p>
+        </article>
+
+        <article class="card">
+          <div class="card-meta"><span>Science</span> · <span class="when">23 Sep 2026</span></div>
+          <h3><a href="https://www.anthropic.com/news/claude-discovers-novel-enzyme-system" target="_blank" rel="noopener">Claude discovers a novel enzyme system with CRISPR-like repeats</a></h3>
+          <p class="snippet">Anthropic reports Claude contributing to a scientific finding: a novel enzyme system featuring CRISPR-like repeats — an early signal of AI-assisted discovery work.</p>
+          <p class="why"><strong>For you</strong> Beyond chatbots: this is the “AI does science” headline class — sharp reading if you’re tracking whether models start moving the research frontier, not just summarising it.</p>
+        </article>
+      </div>
+    </section>
+
+    <footer>
+      Compiled for <span>Phil Bickley</span> · Tuesday 29 September 2026 · Europe/London<br>
+      Sources: BBC News, OpenAI, xAI, Anthropic · Open offline anytime
+    </footer>
+  </div>
+</body>
+</html>
