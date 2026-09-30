@@ -107,32 +107,31 @@ button { font-family: inherit; }
 }
 .admin-panel {
   position: absolute; right: 0; top: calc(100% + .5rem);
-  width: 232px; z-index: 30;
+  width: 248px; z-index: 30;
   display: none;
-  padding: .7rem .75rem .75rem;
-  border: 1px solid var(--line); border-radius: 12px;
-  background: color-mix(in srgb, var(--elev) 92%, #000);
+  padding: .72rem .8rem .8rem;
+  border: 1px solid rgba(125,176,255,.18); border-radius: 12px;
+  background: #0f141c;
   box-shadow:
-    0 18px 40px rgba(0,0,0,.42),
-    0 0 0 1px rgba(125,176,255,.06) inset;
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
+    0 18px 44px rgba(0,0,0,.55),
+    0 0 0 1px rgba(125,176,255,.08) inset;
 }
 .admin-panel.is-open { display: block; }
 .admin-panel[hidden] { display: none; }
 .admin-panel::before {
   content: "";
-  position: absolute; top: -6px; right: 10px;
+  position: absolute; top: -5px; right: 11px;
   width: 10px; height: 10px;
-  background: color-mix(in srgb, var(--elev) 92%, #000);
-  border-left: 1px solid var(--line); border-top: 1px solid var(--line);
+  background: #0f141c;
+  border-left: 1px solid rgba(125,176,255,.18); border-top: 1px solid rgba(125,176,255,.18);
   transform: rotate(45deg);
 }
 .admin-kicker {
   display: flex; align-items: center; justify-content: space-between; gap: .4rem;
   font-family: var(--mono); font-size: .58rem; letter-spacing: .14em;
   text-transform: uppercase; color: var(--dim);
-  margin-bottom: .55rem;
+  padding-bottom: .5rem; margin-bottom: .6rem;
+  border-bottom: 1px solid var(--line);
 }
 .admin-kicker b { color: var(--accent); font-weight: 600; }
 .admin-row {
@@ -185,8 +184,9 @@ button { font-family: inherit; }
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 16%, transparent);
 }
 .admin-hint {
-  margin-top: .48rem;
+  margin-top: .55rem;
   font-size: .64rem; color: var(--dim); letter-spacing: -.01em;
+  white-space: nowrap;
 }
 
 .sub {
@@ -374,7 +374,7 @@ footer.foot b { color: var(--muted); font-weight: 600; }
             <div class="admin-track" id="admin-size-track" aria-hidden="true"></div>
             <button class="admin-btn up" type="button" id="admin-size-up" aria-label="Increase text size"><span class="a">A</span></button>
           </div>
-          <p class="admin-hint">Headlines and story copy only.</p>
+          <p class="admin-hint">Headlines and story copy only</p>
         </div>
       </div>
     </div>
