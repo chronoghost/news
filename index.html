@@ -20,7 +20,14 @@
   --accent: #7db0ff;
   --font: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --read: 1;
 }
+html[data-text="xs"] { --read: .85; }
+html[data-text="sm"] { --read: .92; }
+html[data-text="md"] { --read: 1; }
+html[data-text="lg"] { --read: 1.12; }
+html[data-text="xl"] { --read: 1.26; }
+html[data-text="xx"] { --read: 1.42; }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 body {
@@ -66,11 +73,121 @@ header.top {
   font-family: var(--mono); font-size: .62rem; letter-spacing: .12em;
   text-transform: uppercase; color: var(--dim);
 }
+.header-end {
+  margin-left: auto;
+  display: flex; align-items: center; gap: .7rem;
+}
 .meta-right {
-  margin-left: auto; text-align: right;
+  text-align: right;
   font-size: .72rem; color: var(--muted); line-height: 1.3;
 }
 .meta-right b { color: var(--text); font-weight: 600; }
+
+.admin { position: relative; flex-shrink: 0; }
+button { font-family: inherit; }
+.admin-toggle {
+  appearance: none; width: 32px; height: 32px; padding: 0;
+  display: grid; place-items: center;
+  border: 1px solid var(--line); border-radius: 9px;
+  background: rgba(255,255,255,.03); color: var(--dim);
+  cursor: pointer;
+  transition: color .15s ease, border-color .15s ease, background .15s ease, box-shadow .15s ease;
+}
+.admin-toggle svg { display: block; }
+.admin-toggle:hover {
+  color: var(--text);
+  border-color: rgba(255,255,255,.2);
+  background: rgba(255,255,255,.07);
+}
+.admin-toggle[aria-expanded="true"] {
+  color: var(--accent);
+  border-color: color-mix(in srgb, var(--accent) 42%, var(--line));
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 14%, transparent);
+}
+.admin-panel {
+  position: absolute; right: 0; top: calc(100% + .5rem);
+  width: 232px; z-index: 30;
+  display: none;
+  padding: .7rem .75rem .75rem;
+  border: 1px solid var(--line); border-radius: 12px;
+  background: color-mix(in srgb, var(--elev) 92%, #000);
+  box-shadow:
+    0 18px 40px rgba(0,0,0,.42),
+    0 0 0 1px rgba(125,176,255,.06) inset;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+.admin-panel.is-open { display: block; }
+.admin-panel[hidden] { display: none; }
+.admin-panel::before {
+  content: "";
+  position: absolute; top: -6px; right: 10px;
+  width: 10px; height: 10px;
+  background: color-mix(in srgb, var(--elev) 92%, #000);
+  border-left: 1px solid var(--line); border-top: 1px solid var(--line);
+  transform: rotate(45deg);
+}
+.admin-kicker {
+  display: flex; align-items: center; justify-content: space-between; gap: .4rem;
+  font-family: var(--mono); font-size: .58rem; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--dim);
+  margin-bottom: .55rem;
+}
+.admin-kicker b { color: var(--accent); font-weight: 600; }
+.admin-row {
+  display: flex; align-items: center; justify-content: space-between; gap: .5rem;
+  margin-bottom: .5rem;
+}
+.admin-label {
+  font-size: .78rem; font-weight: 600; letter-spacing: -.02em; color: var(--text);
+}
+.admin-value {
+  font-family: var(--mono); font-size: .68rem; font-weight: 600;
+  color: var(--accent); letter-spacing: .04em;
+  min-width: 2.6rem; text-align: right;
+}
+.admin-size {
+  display: grid; grid-template-columns: 40px 1fr 40px;
+  align-items: center; gap: .45rem;
+}
+.admin-btn {
+  appearance: none; width: 40px; height: 36px; padding: 0;
+  display: grid; place-items: center;
+  border: 1px solid var(--line); border-radius: 9px;
+  background: rgba(255,255,255,.03); color: var(--text);
+  cursor: pointer;
+  font: 650 .78rem var(--font);
+  letter-spacing: -.04em;
+  transition: background .12s ease, border-color .12s ease, color .12s ease;
+}
+.admin-btn .a { font-weight: 700; line-height: 1; }
+.admin-btn.down .a { font-size: .72rem; }
+.admin-btn.up .a { font-size: 1.05rem; }
+.admin-btn:hover:not(:disabled) {
+  border-color: rgba(125,176,255,.4);
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  color: var(--accent);
+}
+.admin-btn:disabled {
+  opacity: .32; cursor: not-allowed;
+}
+.admin-track {
+  display: flex; justify-content: center; gap: .28rem;
+}
+.admin-track i {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: rgba(255,255,255,.14);
+  display: block;
+}
+.admin-track i.on {
+  background: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 16%, transparent);
+}
+.admin-hint {
+  margin-top: .48rem;
+  font-size: .64rem; color: var(--dim); letter-spacing: -.01em;
+}
 
 .sub {
   display: flex; align-items: center; justify-content: space-between;
@@ -98,9 +215,9 @@ header.top {
 }
 .hero a.hero-link { display: grid; grid-template-columns: 1.2fr .95fr; min-height: 228px; height: 100%; }
 .hero .media { min-height: 228px; }
-.hero h2 { font-size: 1.28rem; letter-spacing: -.038em; line-height: 1.18; font-weight: 650; }
+.hero h2 { font-size: calc(1.28rem * var(--read)); letter-spacing: -.038em; line-height: 1.18; font-weight: 650; }
 .hero-body { padding: .7rem .85rem .85rem; display: flex; flex-direction: column; gap: .35rem; }
-.hero .snip { font-size: .84rem; color: var(--muted); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.hero .snip { font-size: calc(.84rem * var(--read)); color: var(--muted); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .side { display: grid; grid-template-rows: 1fr 1fr; gap: .65rem; }
 
 .feature {
@@ -108,7 +225,7 @@ header.top {
 }
 .feature a { display: grid; grid-template-columns: 118px minmax(0,1fr); min-height: 118px; height: 100%; overflow: hidden; }
 .feature .media { min-height: 100%; max-width: 118px; }
-.feature h3 { font-size: .92rem; letter-spacing: -.025em; line-height: 1.25; font-weight: 620; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.feature h3 { font-size: calc(.92rem * var(--read)); letter-spacing: -.025em; line-height: 1.25; font-weight: 620; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 .f-body { padding: .55rem .7rem .6rem; display: flex; flex-direction: column; gap: .28rem; }
 
 .day {
@@ -131,7 +248,7 @@ header.top {
   overflow: hidden; flex-shrink: 0;
 }
 .row h3 {
-  font-size: .9rem; font-weight: 610; letter-spacing: -.02em; line-height: 1.28;
+  font-size: calc(.9rem * var(--read)); font-weight: 610; letter-spacing: -.02em; line-height: 1.28;
   display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
 }
 .r-body { display: flex; flex-direction: column; gap: .18rem; min-width: 0; padding: .05rem 0; }
@@ -163,10 +280,22 @@ header.top {
 }
 .topic, time, .dot { font-size: .68rem; color: var(--dim); font-weight: 500; }
 .why {
-  font-size: .75rem; color: var(--muted); line-height: 1.35;
+  font-size: calc(.75rem * var(--read)); color: var(--muted); line-height: 1.35;
   display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
 }
 .hero .why { -webkit-line-clamp: 2; color: var(--text); opacity: .82; }
+html[data-text="xl"] .row h3,
+html[data-text="xx"] .row h3 { -webkit-line-clamp: 3; }
+html[data-text="xl"] .feature h3,
+html[data-text="xx"] .feature h3 { -webkit-line-clamp: 4; }
+html[data-text="xl"] .why,
+html[data-text="xx"] .why,
+html[data-text="xl"] .hero .snip,
+html[data-text="xx"] .hero .snip,
+html[data-text="xl"] .hero .why,
+html[data-text="xx"] .hero .why { -webkit-line-clamp: 3; }
+html[data-text="xl"] .feature a,
+html[data-text="xx"] .feature a { overflow: visible; min-height: 132px; }
 .row:hover h3, .feature:hover h3, .hero:hover h2 { color: color-mix(in srgb, var(--c) 70%, var(--text)); }
 .row a:hover, .feature a:hover, .hero a:hover { background: rgba(255,255,255,.015); }
 
@@ -185,19 +314,22 @@ footer.foot b { color: var(--muted); font-weight: 600; }
   .stage { grid-template-columns: 1fr; }
   .hero a.hero-link { grid-template-columns: 1fr; }
   .hero .media { min-height: 180px; max-height: 210px; }
-  .hero h2 { font-size: 1.14rem; }
+  .hero h2 { font-size: calc(1.14rem * var(--read)); }
   .side { grid-template-rows: none; }
   .feature a { grid-template-columns: 108px minmax(0,1fr); min-height: 96px; }
   .feature .media { width: 108px; min-width: 108px; }
-  .meta-right { text-align: left; margin-left: 0; width: 100%; }
+  .header-end { width: 100%; margin-left: 0; justify-content: space-between; }
+  .meta-right { text-align: left; }
 }
 @media (max-width: 560px) {
   .wrap { padding: 0 .75rem 2rem; }
   .row a { grid-template-columns: 72px minmax(0,1fr); gap: .55rem; padding: .48rem 0; }
   .row .media { width: 72px; height: 54px; min-width: 72px; max-width: 72px; }
-  .row h3 { font-size: .86rem; }
+  .row h3 { font-size: calc(.86rem * var(--read)); }
   .hero-body, .f-body { padding: .6rem .7rem .7rem; }
   .brand b { font-size: 1rem; }
+  .header-end { width: 100%; margin-left: 0; justify-content: space-between; }
+  .meta-right { text-align: left; }
 }
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition: none !important; }
@@ -205,13 +337,47 @@ footer.foot b { color: var(--muted); font-weight: 600; }
 }
 
 </style>
+<script>
+(function () {
+  try {
+    var allowed = { xs: 1, sm: 1, md: 1, lg: 1, xl: 1, xx: 1 };
+    var id = localStorage.getItem("chronoghost.textSize") || "md";
+    document.documentElement.dataset.text = allowed[id] ? id : "md";
+  } catch (e) {
+    document.documentElement.dataset.text = "md";
+  }
+})();
+</script>
 </head>
 <body>
 <div class="wrap">
   <header class="top">
     <div class="kicker"><span class="live" aria-hidden="true"></span> Live digest · London</div>
     <div class="brand"><b>Chronoghost</b><span>News</span></div>
-    <div class="meta-right"><b>100 stories · 12 sources</b><br>Wednesday 30 September 2026 · 4:12pm BST</div>
+    <div class="header-end">
+      <div class="meta-right"><b>100 stories · 12 sources</b><br>Wednesday 30 September 2026 · 4:12pm BST</div>
+      <div class="admin">
+        <button class="admin-toggle" type="button" aria-expanded="false" aria-controls="admin-panel" aria-label="Open admin">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="3.1"></circle>
+            <path d="M19.4 13a1.7 1.7 0 0 0 .1-2l1.7-1.4-1.6-2.8-2.1.6a1.7 1.7 0 0 0-1.7-1l-.4-2.2h-3.2l-.4 2.2a1.7 1.7 0 0 0-1.7 1l-2.1-.6-1.6 2.8 1.7 1.4a1.7 1.7 0 0 0 .1 2l-1.7 1.4 1.6 2.8 2.1-.6a1.7 1.7 0 0 0 1.7 1l.4 2.2h3.2l.4-2.2a1.7 1.7 0 0 0 1.7-1l2.1.6 1.6-2.8-1.7-1.4Z"></path>
+          </svg>
+        </button>
+        <div class="admin-panel" id="admin-panel" role="dialog" aria-label="Chronoghost admin" hidden>
+          <div class="admin-kicker"><b>Admin</b><span>Display</span></div>
+          <div class="admin-row">
+            <span class="admin-label">Text size</span>
+            <span class="admin-value" id="admin-size-value">100%</span>
+          </div>
+          <div class="admin-size">
+            <button class="admin-btn down" type="button" id="admin-size-down" aria-label="Decrease text size"><span class="a">A</span></button>
+            <div class="admin-track" id="admin-size-track" aria-hidden="true"></div>
+            <button class="admin-btn up" type="button" id="admin-size-up" aria-label="Increase text size"><span class="a">A</span></button>
+          </div>
+          <p class="admin-hint">Headlines and story copy only.</p>
+        </div>
+      </div>
+    </div>
   </header>
   <div class="sub">
     <p class="lede">UK &amp; NI, world wires and frontier AI — mixed by time, newest first. One line on why it matters.</p>
@@ -1382,6 +1548,76 @@ footer.foot b { color: var(--muted); font-weight: 600; }
     }
   }
   chips.forEach((c) => c.addEventListener("click", () => apply(c.dataset.filter)));
+
+  const STEPS = [
+    { id: "xs", label: "85%" },
+    { id: "sm", label: "92%" },
+    { id: "md", label: "100%" },
+    { id: "lg", label: "112%" },
+    { id: "xl", label: "126%" },
+    { id: "xx", label: "142%" }
+  ];
+  const KEY = "chronoghost.textSize";
+  const root = document.documentElement;
+  const toggle = document.querySelector(".admin-toggle");
+  const panel = document.getElementById("admin-panel");
+  const valueEl = document.getElementById("admin-size-value");
+  const track = document.getElementById("admin-size-track");
+  const down = document.getElementById("admin-size-down");
+  const up = document.getElementById("admin-size-up");
+  if (!toggle || !panel || !valueEl || !track || !down || !up) return;
+
+  STEPS.forEach((_, i) => {
+    const dot = document.createElement("i");
+    dot.dataset.i = String(i);
+    track.appendChild(dot);
+  });
+
+  function indexOf(id) {
+    const i = STEPS.findIndex((s) => s.id === id);
+    return i === -1 ? 2 : i;
+  }
+  function currentId() {
+    return root.dataset.text || "md";
+  }
+  function paint() {
+    const i = indexOf(currentId());
+    const step = STEPS[i];
+    root.dataset.text = step.id;
+    valueEl.textContent = step.label;
+    Array.from(track.children).forEach((dot, n) => dot.classList.toggle("on", n === i));
+    down.disabled = i === 0;
+    up.disabled = i === STEPS.length - 1;
+  }
+  function setStep(i) {
+    const step = STEPS[Math.max(0, Math.min(STEPS.length - 1, i))];
+    root.dataset.text = step.id;
+    try { localStorage.setItem(KEY, step.id); } catch (e) {}
+    paint();
+  }
+  function openPanel(open) {
+    panel.hidden = !open;
+    panel.classList.toggle("is-open", open);
+    toggle.setAttribute("aria-expanded", open ? "true" : "false");
+    toggle.setAttribute("aria-label", open ? "Close admin" : "Open admin");
+  }
+
+  toggle.addEventListener("click", (e) => {
+    e.stopPropagation();
+    openPanel(panel.hidden);
+  });
+  down.addEventListener("click", () => setStep(indexOf(currentId()) - 1));
+  up.addEventListener("click", () => setStep(indexOf(currentId()) + 1));
+  document.addEventListener("click", (e) => {
+    if (!panel.hidden && !e.target.closest(".admin")) openPanel(false);
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && !panel.hidden) {
+      openPanel(false);
+      toggle.focus();
+    }
+  });
+  paint();
 })();
 </script>
 </body>
