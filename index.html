@@ -72,42 +72,42 @@ header.top {
   font-family: var(--mono); font-size: .62rem; letter-spacing: .12em;
   text-transform: uppercase; color: var(--dim);
 }
-.header-end {
-  margin-left: auto;
-  display: flex; align-items: center; gap: .7rem;
-}
 .meta-right {
+  margin-left: auto;
   text-align: right;
   font-size: .72rem; color: var(--muted); line-height: 1.3;
 }
 .meta-right b { color: var(--text); font-weight: 600; }
 
-.admin { position: relative; flex-shrink: 0; }
 button { font-family: inherit; }
-.admin-toggle {
-  appearance: none; width: 32px; height: 32px; padding: 0;
+.cg-admin {
+  position: fixed; right: 1rem; bottom: 1rem; z-index: 40;
+  display: flex; flex-direction: column-reverse; align-items: flex-end; gap: .5rem;
+}
+.cg-admin-toggle {
+  appearance: none; width: 40px; height: 40px; padding: 0;
   display: grid; place-items: center;
-  border: 1px solid var(--line); border-radius: 9px;
-  background: rgba(255,255,255,.03); color: var(--dim);
+  border: 1px solid rgba(125,176,255,.22); border-radius: 12px;
+  background: #0f141c; color: var(--dim);
   cursor: pointer;
+  box-shadow: 0 10px 28px rgba(0,0,0,.4);
   transition: color .15s ease, border-color .15s ease, background .15s ease, box-shadow .15s ease;
 }
-.admin-toggle svg { display: block; }
-.admin-toggle:hover {
+.cg-admin-toggle svg { width: 17px; height: 17px; display: block; }
+.cg-admin-toggle:hover {
   color: var(--text);
-  border-color: rgba(255,255,255,.2);
-  background: rgba(255,255,255,.07);
+  border-color: rgba(255,255,255,.22);
+  background: #141a24;
 }
-.admin-toggle[aria-expanded="true"] {
+.cg-admin-toggle[aria-expanded="true"] {
   color: var(--accent);
   border-color: color-mix(in srgb, var(--accent) 42%, var(--line));
-  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  background: color-mix(in srgb, var(--accent) 12%, #0f141c);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 14%, transparent);
 }
-.admin-panel {
-  position: absolute; right: 0; top: calc(100% + .5rem);
-  width: 248px; z-index: 30;
+.cg-admin-panel {
   display: none;
+  width: 248px;
   padding: .72rem .8rem .8rem;
   border: 1px solid rgba(125,176,255,.18); border-radius: 12px;
   background: #0f141c;
@@ -115,79 +115,49 @@ button { font-family: inherit; }
     0 18px 44px rgba(0,0,0,.55),
     0 0 0 1px rgba(125,176,255,.08) inset;
 }
-.admin-panel.is-open { display: block; }
-.admin-panel[hidden] { display: none; }
-.admin-panel::before {
-  content: "";
-  position: absolute; top: -5px; right: 11px;
-  width: 10px; height: 10px;
-  background: #0f141c;
-  border-left: 1px solid rgba(125,176,255,.18); border-top: 1px solid rgba(125,176,255,.18);
-  transform: rotate(45deg);
-}
-.admin-kicker {
-  display: flex; align-items: center; justify-content: space-between; gap: .4rem;
+.cg-admin-panel.open { display: block; }
+.cg-admin-label {
+  display: flex; align-items: center; justify-content: space-between;
   font-family: var(--mono); font-size: .58rem; letter-spacing: .14em;
   text-transform: uppercase; color: var(--dim);
   padding-bottom: .5rem; margin-bottom: .6rem;
   border-bottom: 1px solid var(--line);
 }
-.admin-kicker b { color: var(--accent); font-weight: 600; }
-.admin-row {
-  display: flex; align-items: center; justify-content: space-between; gap: .5rem;
-  margin-bottom: .5rem;
+.cg-admin-label::before {
+  content: "Admin";
+  color: var(--accent); font-weight: 600;
 }
-.admin-label {
-  font-size: .78rem; font-weight: 600; letter-spacing: -.02em; color: var(--text);
-}
-.admin-value {
-  font-family: var(--mono); font-size: .68rem; font-weight: 600;
-  color: var(--accent); letter-spacing: .04em;
-  min-width: 2.6rem; text-align: right;
-}
-.admin-size {
-  display: grid; grid-template-columns: 40px 1fr 40px;
+.cg-admin-row {
+  display: grid; grid-template-columns: 44px 1fr 44px;
   align-items: center; gap: .45rem;
 }
-.admin-btn {
-  appearance: none; width: 40px; height: 36px; padding: 0;
+.cg-admin-btn {
+  appearance: none; width: 44px; height: 38px; padding: 0;
   display: grid; place-items: center;
   border: 1px solid var(--line); border-radius: 9px;
   background: rgba(255,255,255,.03); color: var(--text);
   cursor: pointer;
-  font: 650 .78rem var(--font);
+  font: 650 .86rem var(--font);
   letter-spacing: -.04em;
   transition: background .12s ease, border-color .12s ease, color .12s ease;
 }
-.admin-btn .a { font-weight: 700; line-height: 1; }
-.admin-btn.down .a { font-size: .72rem; }
-.admin-btn.up .a { font-size: 1.05rem; }
-.admin-btn:hover:not(:disabled) {
+.cg-admin-btn[data-dir="-1"] { font-size: .74rem; }
+.cg-admin-btn[data-dir="1"] { font-size: 1.05rem; }
+.cg-admin-btn:hover:not(:disabled) {
   border-color: rgba(125,176,255,.4);
   background: color-mix(in srgb, var(--accent) 12%, transparent);
   color: var(--accent);
 }
-.admin-btn:disabled {
-  opacity: .32; cursor: not-allowed;
+.cg-admin-btn:disabled { opacity: .32; cursor: not-allowed; }
+.cg-admin-value {
+  text-align: center; line-height: 1.25;
+  font-size: .72rem; font-weight: 600; letter-spacing: -.02em; color: var(--text);
 }
-.admin-track {
-  display: flex; justify-content: center; gap: .28rem;
-}
-.admin-track i {
-  width: 6px; height: 6px; border-radius: 50%;
-  background: rgba(255,255,255,.14);
+.cg-admin-value span {
   display: block;
+  font-family: var(--mono); font-size: .68rem; font-weight: 600;
+  color: var(--accent); letter-spacing: .04em;
 }
-.admin-track i.on {
-  background: var(--accent);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 16%, transparent);
-}
-.admin-hint {
-  margin-top: .55rem;
-  font-size: .64rem; color: var(--dim); letter-spacing: -.01em;
-  white-space: nowrap;
-}
-
 .sub {
   display: flex; align-items: center; justify-content: space-between;
   gap: .75rem; flex-wrap: wrap;
@@ -317,8 +287,7 @@ footer.foot b { color: var(--muted); font-weight: 600; }
   .side { grid-template-rows: none; }
   .feature a { grid-template-columns: 108px minmax(0,1fr); min-height: 96px; }
   .feature .media { width: 108px; min-width: 108px; }
-  .header-end { width: 100%; margin-left: 0; justify-content: space-between; }
-  .meta-right { text-align: left; }
+  .meta-right { text-align: left; margin-left: 0; width: 100%; }
 }
 @media (max-width: 560px) {
   .wrap { padding: 0 .75rem 2rem; }
@@ -327,8 +296,7 @@ footer.foot b { color: var(--muted); font-weight: 600; }
   .row h3 { font-size: calc(.86rem * var(--read)); }
   .hero-body, .f-body { padding: .6rem .7rem .7rem; }
   .brand b { font-size: 1rem; }
-  .header-end { width: 100%; margin-left: 0; justify-content: space-between; }
-  .meta-right { text-align: left; }
+  .meta-right { text-align: left; margin-left: 0; width: 100%; }
 }
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition: none !important; }
@@ -336,6 +304,24 @@ footer.foot b { color: var(--muted); font-weight: 600; }
 }
 
 </style>
+<script>
+(function () {
+  try {
+    var raw = localStorage.getItem("chronoghost-news-read-size");
+    var n = raw == null ? 1 : Number(raw);
+    if (!Number.isFinite(n)) n = 1;
+    n = Math.max(0.85, Math.min(1.3, n));
+    document.documentElement.style.setProperty("--read", String(n));
+    var steps = [0.85, 0.925, 1, 1.1, 1.2, 1.3];
+    var ids = ["xs", "sm", "md", "lg", "xl", "xx"];
+    var best = 2;
+    for (var i = 0; i < steps.length; i++) {
+      if (Math.abs(steps[i] - n) < Math.abs(steps[best] - n)) best = i;
+    }
+    document.documentElement.dataset.text = ids[best];
+  } catch (e) {}
+})();
+</script>
 </head>
 <body>
 <div class="wrap">
@@ -1501,7 +1487,7 @@ footer.foot b { color: var(--muted); font-weight: 600; }
       <button type="button" class="cg-admin-btn" data-dir="1" aria-label="Increase text size">A+</button>
     </div>
   </div>
-  <button type="button" class="cg-admin-toggle" aria-expanded="false" aria-controls="cg-admin-panel" title="Reading size">
+  <button type="button" class="cg-admin-toggle" aria-expanded="false" aria-controls="cg-admin-panel" aria-label="Open admin" title="Admin">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
       <circle cx="12" cy="12" r="3"></circle>
       <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
@@ -1560,9 +1546,11 @@ footer.foot b { color: var(--muted); font-weight: 600; }
     }
   }
   let idx = loadIndex();
+  const DATA = ["xs", "sm", "md", "lg", "xl", "xx"];
   function render() {
     const scale = STEPS[idx];
     root.style.setProperty("--read", String(scale));
+    root.dataset.text = DATA[idx];
     valueEl.innerHTML = LABELS[idx] + ' <span>' + Math.round(scale * 100) + '%</span>';
     btnDown.disabled = idx <= 0;
     btnUp.disabled = idx >= STEPS.length - 1;
@@ -1577,6 +1565,7 @@ footer.foot b { color: var(--muted); font-weight: 600; }
     const open = !panel.classList.contains("open");
     panel.classList.toggle("open", open);
     toggle.setAttribute("aria-expanded", open ? "true" : "false");
+    toggle.setAttribute("aria-label", open ? "Close admin" : "Open admin");
   });
   btnDown.addEventListener("click", (e) => { e.stopPropagation(); step(-1); });
   btnUp.addEventListener("click", (e) => { e.stopPropagation(); step(1); });
